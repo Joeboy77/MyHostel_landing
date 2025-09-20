@@ -31,7 +31,7 @@ const PrivacyPolicy: React.FC = () => {
           </Paragraph>
 
           <Paragraph style={{ fontSize: '16px', lineHeight: '1.8' }}>
-            This Privacy Policy describes how HosFind ("we", "our", or "us") collects, uses, and shares your personal information when you use our mobile application and related services.
+            This Privacy Policy describes how MyHostel ("we", "our", or "us") collects, uses, and shares your personal information when you use our mobile application and related services.
           </Paragraph>
 
           <Title level={2} style={{ color: '#e74c3c', marginTop: '40px' }}>Information We Collect</Title>

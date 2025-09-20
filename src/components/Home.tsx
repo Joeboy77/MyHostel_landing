@@ -26,7 +26,7 @@ const Home: React.FC = () => {
           <div className="header-content">
             <a href="#" className="logo">
               <img src="/mainIcon.png" alt="HosFind Logo" />
-              <span className="logo-text">HosFind</span>
+              <span className="logo-text">MyHostel</span>
               <span className="logo-text-mobile">HF</span>
             </a>
             
@@ -57,7 +57,7 @@ const Home: React.FC = () => {
                 </h1>
                 <p>
                   Discover amazing properties, book rooms instantly, and experience 
-                  hospitality like never before. HosFind makes finding accommodation 
+                  hospitality like never before. MyHostel makes finding accommodation 
                   simple, secure, and satisfying.
                 </p>
                 <div className="hero-buttons">
@@ -104,7 +104,7 @@ const Home: React.FC = () => {
               Trusted by Thousands
             </Title>
             <Paragraph className="section-subtitle">
-              Join our growing community of satisfied users who trust HosFind for their accommodation needs
+              Join our growing community of satisfied users who trust MyHostel for their accommodation needs
             </Paragraph>
             
             <div className="stats-grid">
@@ -132,7 +132,7 @@ const Home: React.FC = () => {
         <section id="features" className="features-section">
           <div className="container">
             <Title level={1} className="section-title">
-              Why Choose HosFind?
+              Why Choose MyHostel?
             </Title>
             <Paragraph className="section-subtitle">
               Experience the difference with our innovative features designed to make your stay perfect
@@ -210,7 +210,7 @@ const Home: React.FC = () => {
                 <h2>Everything You Need for the Perfect Stay</h2>
                 <p>
                   From the moment you start searching to the day you check out, 
-                  HosFind provides everything you need for an unforgettable experience.
+                  MyHostel provides everything you need for an unforgettable experience.
                 </p>
                 
                 <div className="benefits-list">
@@ -260,7 +260,7 @@ const Home: React.FC = () => {
           <div className="container">
             <h2>Ready to Start Your Journey?</h2>
             <p>
-              Download HosFind today and discover amazing properties around the world. 
+              Download MyHostel today and discover amazing properties around the world. 
               Available on both iOS and Android devices.
             </p>
             
@@ -282,8 +282,8 @@ const Home: React.FC = () => {
           <div className="footer-content">
             <div className="footer-brand">
               <div className="logo">
-                <img src="/mainIcon.png" alt="HosFind Logo" />
-                <span className="name">HosFind</span>
+                <img src="/mainIcon.png" alt="MyHostel Logo" />
+                <span className="name">MyHostel</span>
               </div>
               <p>
                 Making accommodation search simple, secure, and satisfying for travelers worldwide.
@@ -319,7 +319,7 @@ const Home: React.FC = () => {
           </div>
           
           <div className="footer-bottom">
-            <p>&copy; 2024 HosFind. All rights reserved.</p>
+            <p>&copy; 2025 MyHostel. All rights reserved.</p>
           </div>
         </div>
       </Footer>
