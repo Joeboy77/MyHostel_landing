@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Layout, Typography, Button, Card, Steps, Alert, Divider } from 'antd';
-import { ArrowLeftOutlined, UserDeleteOutlined, MailOutlined, PhoneOutlined, ExclamationCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { Layout, Typography, Button, Card, Steps, Alert, Divider, Form, Input, message } from 'antd';
+import { ArrowLeftOutlined, UserDeleteOutlined, MailOutlined, PhoneOutlined, ExclamationCircleOutlined, CheckCircleOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const { Content } = Layout;
@@ -9,7 +9,10 @@ const { Step } = Steps;
 
 const DeleteAccount: React.FC = () => {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep] = useState(0);
+  const [showDeleteForm, setShowDeleteForm] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [form] = Form.useForm();
 
   const steps = [
     {
@@ -29,6 +32,63 @@ const DeleteAccount: React.FC = () => {
       description: 'Account deleted',
     },
   ];
+
+  const handleDeleteAccount = async (values: { phoneNumber: string; password: string }) => {
+    setIsDeleting(true);
+    try {
+      // First, login to get the token
+      const loginResponse = await fetch('https://hos-find-be.onrender.com/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phoneNumber: values.phoneNumber,
+          password: values.password,
+        }),
+      });
+
+      if (!loginResponse.ok) {
+        const errorData = await loginResponse.json();
+        throw new Error(errorData.message || 'Invalid credentials');
+      }
+
+      const loginData = await loginResponse.json();
+      console.log('Login response:', loginData);
+      
+      const token = loginData.data?.tokens?.accessToken;
+
+      if (!token) {
+        throw new Error('Failed to get authentication token');
+      }
+
+      // Now delete the account using the token
+      const deleteResponse = await fetch('https://hos-find-be.onrender.com/api/users/profile', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!deleteResponse.ok) {
+        const errorData = await deleteResponse.json();
+        throw new Error(errorData.message || 'Failed to delete account');
+      }
+
+      const deleteData = await deleteResponse.json();
+      console.log('Delete response:', deleteData);
+
+      message.success('Account deleted successfully!');
+      setShowDeleteForm(false);
+      form.resetFields();
+    } catch (error) {
+      console.error('Delete account error:', error);
+      message.error(error instanceof Error ? error.message : 'Failed to delete account');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   const dataTypes = [
     'Personal information (name, email, phone number)',
@@ -94,9 +154,9 @@ const DeleteAccount: React.FC = () => {
             <div style={{ background: '#f5f5f5', padding: '20px', borderRadius: '8px', margin: '20px 0' }}>
               <Text strong>Required Information:</Text>
               <ul style={{ marginTop: '10px' }}>
-                <li>Your registered email address</li>
                 <li>Your registered phone number</li>
-                <li>Subject line: "Account Deletion Request"</li>
+                <li>Your account password</li>
+                <li>Subject line: "Account Deletion Request" (for email method)</li>
                 <li>Confirmation that you want to permanently delete your account</li>
               </ul>
             </div>
@@ -118,8 +178,84 @@ const DeleteAccount: React.FC = () => {
               >
                 Call Us
               </Button>
+              <Button 
+                type="default" 
+                icon={<LockOutlined />} 
+                size="large"
+                onClick={() => setShowDeleteForm(!showDeleteForm)}
+                style={{ borderColor: '#e74c3c', color: '#e74c3c' }}
+              >
+                Delete Account Now
+              </Button>
             </div>
           </Card>
+
+          {showDeleteForm && (
+            <Card style={{ marginBottom: '30px', border: '2px solid #e74c3c' }}>
+              <Title level={3} style={{ color: '#e74c3c', marginBottom: '20px' }}>
+                ⚠️ Delete Account Immediately
+              </Title>
+              <Alert
+                message="Warning: This action cannot be undone!"
+                description="Once you delete your account, all your data will be permanently removed and cannot be recovered."
+                type="error"
+                style={{ marginBottom: '20px' }}
+              />
+              
+              <Form
+                form={form}
+                onFinish={handleDeleteAccount}
+                layout="vertical"
+                style={{ maxWidth: '400px' }}
+              >
+                <Form.Item
+                  name="phoneNumber"
+                  label="Phone Number"
+                  rules={[
+                    { required: true, message: 'Please enter your phone number' },
+                    { pattern: /^[0-9+\-\s()]+$/, message: 'Please enter a valid phone number' }
+                  ]}
+                >
+                  <Input 
+                    prefix={<PhoneOutlined />} 
+                    placeholder="Enter your phone number"
+                    size="large"
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name="password"
+                  label="Password"
+                  rules={[
+                    { required: true, message: 'Please enter your password' }
+                  ]}
+                >
+                  <Input.Password 
+                    prefix={<LockOutlined />} 
+                    placeholder="Enter your password"
+                    size="large"
+                  />
+                </Form.Item>
+
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    loading={isDeleting}
+                    size="large"
+                    danger
+                    style={{ 
+                      width: '100%',
+                      backgroundColor: '#e74c3c',
+                      borderColor: '#e74c3c'
+                    }}
+                  >
+                    {isDeleting ? 'Deleting Account...' : 'Delete My Account'}
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Card>
+          )}
 
           <Card style={{ marginBottom: '30px' }}>
             <Title level={3} style={{ color: '#e74c3c' }}>What Data Will Be Deleted</Title>
