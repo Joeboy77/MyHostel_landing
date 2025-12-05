@@ -36,15 +36,26 @@ const PrivacyPolicy: React.FC = () => {
 
           <Title level={2} style={{ color: '#e74c3c', marginTop: '40px' }}>Information We Collect</Title>
           
-          <Title level={3}>Personal Information</Title>
+          <Title level={3}>Account Information</Title>
           <Paragraph style={{ fontSize: '16px', lineHeight: '1.8' }}>
-            When you create an account, we may collect:
+            When you create an account, we collect:
             <ul style={{ fontSize: '16px', lineHeight: '1.8' }}>
-              <li>Name and email address</li>
-              <li>Phone number</li>
-              <li>Profile information and preferences</li>
-              <li>Payment information (processed securely through third-party providers)</li>
+              <li>Full name</li>
+              <li>Email address</li>
+              <li>Password (encrypted and securely stored)</li>
             </ul>
+          </Paragraph>
+
+          <Title level={3}>Payment Information</Title>
+          <Paragraph style={{ fontSize: '16px', lineHeight: '1.8' }}>
+            When you make a booking and proceed to payment, we collect:
+            <ul style={{ fontSize: '16px', lineHeight: '1.8' }}>
+              <li><strong>Phone number:</strong> Collected through Paystack's secure payment gateway during the payment process. This is required for payment processing and booking confirmations.</li>
+              <li>Payment information (processed securely through Paystack, a third-party payment provider)</li>
+            </ul>
+            <Text style={{ fontSize: '16px', fontStyle: 'italic', color: '#666' }}>
+              Note: Phone number is not required during account registration. It is only collected when you choose to make a payment.
+            </Text>
           </Paragraph>
 
           <Title level={3}>Usage Information</Title>
@@ -53,7 +64,7 @@ const PrivacyPolicy: React.FC = () => {
             <ul style={{ fontSize: '16px', lineHeight: '1.8' }}>
               <li>Device information (device type, operating system, unique device identifiers)</li>
               <li>App usage data (features used, time spent, pages viewed)</li>
-              <li>Location data (with your permission)</li>
+              <li>Location data (only when you grant permission, used for finding nearby properties)</li>
               <li>Log data (IP address, access times, app crashes)</li>
             </ul>
           </Paragraph>
@@ -62,9 +73,10 @@ const PrivacyPolicy: React.FC = () => {
           <Paragraph style={{ fontSize: '16px', lineHeight: '1.8' }}>
             We use the information we collect to:
             <ul style={{ fontSize: '16px', lineHeight: '1.8' }}>
+              <li>Create and manage your account</li>
               <li>Provide and improve our services</li>
-              <li>Process bookings and payments</li>
-              <li>Send you important updates about your bookings</li>
+              <li>Process bookings and payments (phone number is used for payment processing and booking confirmations)</li>
+              <li>Send you important updates about your bookings via email and SMS (when phone number is provided)</li>
               <li>Personalize your experience</li>
               <li>Communicate with you about our services</li>
               <li>Ensure the security of our platform</li>
