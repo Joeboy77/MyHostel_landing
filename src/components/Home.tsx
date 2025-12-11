@@ -265,10 +265,24 @@ const Home: React.FC = () => {
             </p>
             
             <div className="download-buttons">
-              <Button className="download-btn" size="large" icon={<AppleOutlined />}>
+              <Button 
+                className="download-btn" 
+                size="large" 
+                icon={<AppleOutlined />}
+                href="https://apps.apple.com/gh/app/my-hostel-app/id6756062487"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Download for iOS
               </Button>
-              <Button className="download-btn" size="large" icon={<AndroidOutlined />}>
+              <Button 
+                className="download-btn" 
+                size="large" 
+                icon={<AndroidOutlined />}
+                href="https://play.google.com/store/apps/details?id=com.myhostel.mobile&pcampaignid=web_share"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Download for Android
               </Button>
             </div>
