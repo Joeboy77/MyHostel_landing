@@ -255,7 +255,7 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* Download Section */}
+        {/* Download Section... */}
         <section id="download" className="download-section">
           <div className="container">
             <h2>Ready to Start Your Journey?</h2>
