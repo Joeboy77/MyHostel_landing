@@ -7,6 +7,8 @@ const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
 const { Step } = Steps;
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://hos-find-be-494o.onrender.com/api';
+
 const DeleteAccount: React.FC = () => {
   const navigate = useNavigate();
   const [currentStep] = useState(0);
@@ -33,17 +35,17 @@ const DeleteAccount: React.FC = () => {
     },
   ];
 
-  const handleDeleteAccount = async (values: { phoneNumber: string; password: string }) => {
+  const handleDeleteAccount = async (values: { email: string; password: string }) => {
     setIsDeleting(true);
     try {
       // First, login to get the token
-      const loginResponse = await fetch('https://hos-find-be.onrender.com/api/auth/login', {
+      const loginResponse = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          phoneNumber: values.phoneNumber,
+          email: values.email.trim(),
           password: values.password,
         }),
       });
@@ -63,7 +65,7 @@ const DeleteAccount: React.FC = () => {
       }
 
       // Now delete the account using the token
-      const deleteResponse = await fetch('https://hos-find-be.onrender.com/api/users/profile', {
+      const deleteResponse = await fetch(`${API_BASE_URL}/users/profile`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -154,7 +156,7 @@ const DeleteAccount: React.FC = () => {
             <div style={{ background: '#f5f5f5', padding: '20px', borderRadius: '8px', margin: '20px 0' }}>
               <Text strong>Required Information:</Text>
               <ul style={{ marginTop: '10px' }}>
-                <li>Your registered phone number</li>
+                <li>Your registered email address</li>
                 <li>Your account password</li>
                 <li>Subject line: "Account Deletion Request" (for email method)</li>
                 <li>Confirmation that you want to permanently delete your account</li>
@@ -209,16 +211,18 @@ const DeleteAccount: React.FC = () => {
                 style={{ maxWidth: '400px' }}
               >
                 <Form.Item
-                  name="phoneNumber"
-                  label="Phone Number"
+                  name="email"
+                  label="Email Address"
                   rules={[
-                    { required: true, message: 'Please enter your phone number' },
-                    { pattern: /^[0-9+\-\s()]+$/, message: 'Please enter a valid phone number' }
+                    { required: true, message: 'Please enter your email address' },
+                    { type: 'email', message: 'Please enter a valid email address' }
                   ]}
                 >
-                  <Input 
-                    prefix={<PhoneOutlined />} 
-                    placeholder="Enter your phone number"
+                  <Input
+                    prefix={<MailOutlined />}
+                    placeholder="Enter the email you signed up with"
+                    type="email"
+                    autoComplete="email"
                     size="large"
                   />
                 </Form.Item>
